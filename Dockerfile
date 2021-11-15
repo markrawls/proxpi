@@ -5,5 +5,6 @@ RUN apk add --no-cache --virtual .build-deps gcc libc-dev libxslt-dev libxml2-de
  && pip install /root/src/proxpi \
  && apk del .build-deps
 ENV FLASK_APP=proxpi.server
+VOLUME ["/storage"]
 ENTRYPOINT ["flask"]
 CMD ["run", "--host", "0.0.0.0"]

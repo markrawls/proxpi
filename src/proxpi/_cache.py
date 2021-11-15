@@ -6,7 +6,6 @@ import re
 import time
 import shutil
 import logging
-import tempfile
 import threading
 import collections
 import typing as t
@@ -240,16 +239,11 @@ class _CachedFile:
 class _FileCache:
     def __init__(self, max_size):
         self.max_size = max_size
-        self._package_dir = tempfile.mkdtemp()
+        self._package_dir = os.getenv('STORAGE_DIR', '/storage')
         self._files = {}
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.max_size!r})"
-
-    def __del__(self):
-        if os.path.isdir(self._package_dir):
-            logger.debug(f"Deleting '{self._package_dir}'")
-            shutil.rmtree(self._package_dir)
 
     def _download_file(self, url: str, path: str):
         """Download a file.

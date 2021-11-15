@@ -1,0 +1,19 @@
+kind: pipeline
+type: docker
+name: Publish
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: Publish
+    image: plugins/docker
+    settings:
+      repo: markrawls/proxpi
+      tags:
+        - latest
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_password
